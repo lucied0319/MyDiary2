@@ -15,8 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,6 +36,7 @@ public class MakeDiaryFragment extends Fragment {
     Spinner spinnerTag;
     TextInputEditText editTitle;
     TextInputEditText editBodyText;
+    ImageView imageDiaryPhoto;
 
     int year;
     int month;
@@ -49,8 +50,11 @@ public class MakeDiaryFragment extends Fragment {
     public MakeDiaryFragment() {
         // Required empty public constructor
     }
-    public static MakeDiaryFragment newInstance(String param1, String param2) {
+    public static MakeDiaryFragment newInstance(String date) {
         MakeDiaryFragment fragment = new MakeDiaryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("date",date);
+        fragment.setArguments(bundle);
 
         return fragment;
     }
@@ -58,6 +62,10 @@ public class MakeDiaryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            date = getArguments().getString("date");
+        }
+
 
         //リアムデータベース取得
         realm = Realm.getDefaultInstance();
@@ -87,6 +95,8 @@ public class MakeDiaryFragment extends Fragment {
         spinnerWeather = view.findViewById(R.id.spinnerWeather);
         editBodyText = view.findViewById(R.id.editBodyText);
         editTitle = view.findViewById(R.id.editTitle);
+        imageDiaryPhoto = view.findViewById(R.id.imageDiaryPhoto);
+        imageDiaryPhoto.setImageResource(R.drawable.paku);
 
         // 日付ボタンに日付セット
         buttonDate.setText(date);
